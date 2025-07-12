@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center align-items-center p-0">
+  <div class="row w-100 justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-5 my-5 text-center">
+      <div class="card px-4 px-lg-5 py-2 shadow-sm border-0">
+        <div class="py-5 mb-2">
+          <img src="assets/img/studentrack_logo.png" width="60px" />
+          <div class="navbar-brand fw-bold fs-3">Studen<span style="color: var(--primaryColor)" class="fw-bold">Track</span></div>
+          <p class="text-muted small mt-1">Create your account</p>
+        </div>
+        <form id="signupForm" novalidate>
+          <!-- Name -->
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" placeholder="Full Name" required />
+            <label for="name">Full Name</label>
+            <div class="invalid-feedback">Please enter your full name.</div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="email" placeholder="Email Address" required />
+            <label for="email">Email Address</label>
+            <div class="invalid-feedback">Enter a valid email address.</div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" placeholder="Password" required minlength="6" />
+            <label for="password">Password</label>
+            <div class="invalid-feedback">Password must be at least 6 characters.</div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required />
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="invalid-feedback">Please confirm your password.</div>
+          </div>
+
+          <!-- RFID -->
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="rfid" placeholder="RFID Card Number" required />
+            <label for="rfid">RFID Card Number</label>
+            <div class="invalid-feedback">Enter your RFID card number.</div>
+          </div>
+
+          <!-- Submit -->
+          <div class="btn btn-outline-light w-100 mt-3 mb-5" onclick="loadPage('dashboard')">Sign Up</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
