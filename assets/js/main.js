@@ -12,7 +12,6 @@ function loadPage(pageName) {
         .then((res) => res.text())
         .then((data) => {
             container.innerHTML = data;
-            window.scrollTo({ top: container.offsetTop, behavior: 'smooth' });
 
             switch (pageName) {
                 case 'dashboard':

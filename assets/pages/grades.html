@@ -36,17 +36,40 @@
   </div>
 </div>
 
-<div class="row g-3 my-4 justify-content-center" id="inputSubjectRow" style="display: none">
-  <div class="col-12 col-md-6 col-lg-5">
-    <label for="subject" class="form-label">Subject</label>
-    <input type="text" class="form-control" id="subject" />
-  </div>
+<div class="row my-4" id="inputSubjectRow" style="display: none;">
+  <div class="d-flex flex-wrap gap-3">
+    <div class="flex-fill" style="min-width: 250px;">
+      <label for="subject" class="form-label">Subject</label>
+      <input type="text" class="form-control" id="subject" />
+    </div>
 
-  <div class="col-12 col-md-4 col-lg-2">
-    <label for="grade" class="form-label">Grade</label>
-    <input type="number" class="form-control" id="grade" />
+    <div class="flex-fill" style="min-width: 120px; max-width: 150px;">
+      <label for="grade" class="form-label">Grade</label>
+      <input type="number" class="form-control" id="grade" />
+    </div>
+
+    <div class="flex-fill" style="min-width: 180px;">
+      <label for="academicYearInput" class="form-label">Academic Year</label>
+      <select id="academicYearInput" class="form-select">
+        <option selected disabled>Select Year</option>
+        <option value="2024-2025">2024 - 2025</option>
+        <option value="2025-2026">2025 - 2026</option>
+        <option value="2026-2027">2026 - 2027</option>
+      </select>
+    </div>
+
+    <div class="flex-fill" style="min-width: 160px;">
+      <label for="semesterInput" class="form-label">Semester</label>
+      <select id="semesterInput" class="form-select">
+        <option selected disabled>Select Semester</option>
+        <option value="1st">1st Semester</option>
+        <option value="2nd">2nd Semester</option>
+        <option value="Summer">Summer</option>
+      </select>
+    </div>
   </div>
 </div>
+
 
 <div id="alertContainer"></div>
 

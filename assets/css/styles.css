@@ -146,19 +146,19 @@ a[onclick] {
   .form-select {
     font-size: 14px;
   }
-    table {
-    font-size: 0.875rem; /* or try 0.75rem */
+  table {
+    font-size: 0.875rem;
   }
 
   .table td,
   .table th {
-    padding: 0.5rem 0.4rem; /* reduce padding for mobile */
+    padding: 0.5rem 0.4rem;
   }
 
   .table td i {
-    font-size: 1rem; /* keep icons readable */
+    font-size: 1rem;
   }
-   th,
+  th,
   td {
     font-size: 0.85rem;
   }
