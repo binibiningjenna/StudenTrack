@@ -68,7 +68,6 @@ function loadDashboardCalendar() {
         const editModal = new bootstrap.Modal(document.getElementById('editEventModal'));
         editModal.show();
       }
-
     });
 
     calendar.render();

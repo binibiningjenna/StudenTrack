@@ -34,6 +34,7 @@ body {
 }
 
 .btn {
+  font-size: 0.9rem;
   color: var(--darkColor);
   text-transform: capitalize;
   font-weight: 500;
@@ -125,17 +126,13 @@ a[onclick] {
   background-color: var(--darkColor);
 }
 
-.fc-daygrid-day-frame,
-.fc-scrollgrid,
-.fc-scrollgrid-section,
-.fc-scrollgrid-sync-inner,
-.fc-daygrid-body-natural {
-  border: none !important;
-}
-
 .fc .fc-day-today {
   background-color: #d5d5d5 !important;
 }
+
+.dropdown-item-text {
+    font-size: 0.9rem;
+  }
 
 @media (max-width: 576px) {
   .btn {

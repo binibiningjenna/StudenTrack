@@ -20,12 +20,12 @@ function showSubjectInput() {
     const semesterValue = semester.value;
 
     if (!subjectValue || !gradeValue || !yearValue || !semesterValue) {
-      if (alertContainer) {
-        alertContainer.innerHTML = `
-          <div class="alert alert-danger d-inline-block" role="alert">
-            Please fill in all fields.
-          </div>`;
-      }
+      const toastBody = document.getElementById('toastBody');
+      toastBody.textContent = 'Please fill in all fields.';
+
+      const toastElement = document.getElementById('alertToast');
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
       return;
     }
 
