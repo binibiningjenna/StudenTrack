@@ -6,6 +6,9 @@ function loadPage(pageName) {
         navbar.style.display = 'none';
     } else {
         navbar.style.display = 'flex';
+        const collapseTarget = document.getElementById('navbars');
+        const bsCollapse = bootstrap.Collapse.getInstance(collapseTarget);
+        if (bsCollapse) bsCollapse.hide();
     }
 
     fetch(`assets/pages/${pageName}.html`)
@@ -42,3 +45,15 @@ function loadPage(pageName) {
         });
 }
 
+// function closeNavBar() {
+//     document.querySelectorAll('.nav-link').forEach(link => {
+//         link.addEventListener('click', () => {
+//             const navbar = document.getElementById('navbar');
+//             const bsCollapse = bootstrap.Collapse.getInstance(navbar);
+//             if (bsCollapse) {
+//                 bsCollapse.hide();
+//             }
+//         })
+//     })
+// }
+// closeNavBar();

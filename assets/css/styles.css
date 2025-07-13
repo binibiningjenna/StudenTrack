@@ -131,8 +131,17 @@ a[onclick] {
 }
 
 .dropdown-item-text {
-    font-size: 0.9rem;
-  }
+  font-size: 0.9rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}
 
 @media (max-width: 576px) {
   .btn {
