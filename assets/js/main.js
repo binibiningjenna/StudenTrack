@@ -16,14 +16,16 @@ function loadPage(pageName) {
             switch (pageName) {
                 case 'dashboard':
                     setTimeout(() => {
-                        loadCalendar();
+                        loadDashboardCalendar();
                     }, 0);
                     break;
                 case 'grades':
                     //   initGrades();
                     break;
                 case 'attendance':
-                    //   initAttendance();
+                    setTimeout(() => {
+                        loadAttendanceCalendar();
+                    }, 0);
                     break;
                 case 'settings':
                     //   initSettings();
