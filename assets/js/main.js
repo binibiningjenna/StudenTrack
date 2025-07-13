@@ -2,10 +2,10 @@ function loadPage(pageName) {
     const container = document.getElementById('main-container');
     const navbar = document.getElementById('navbar');
 
-    if (pageName === 'login' || pageName === 'signup') {
+    if (['login', 'signup', 'checkin', 'landing'].includes(pageName)) {
         navbar.style.display = 'none';
     } else {
-        navbar.style.display = 'block';
+        navbar.style.display = 'flex';
     }
 
     fetch(`assets/pages/${pageName}.html`)
@@ -20,7 +20,6 @@ function loadPage(pageName) {
                     }, 0);
                     break;
                 case 'grades':
-                    //   initGrades();
                     break;
                 case 'attendance':
                     setTimeout(() => {
@@ -28,13 +27,10 @@ function loadPage(pageName) {
                     }, 0);
                     break;
                 case 'settings':
-                    //   initSettings();
                     break;
                 case 'login':
-                    //   initSettings();
                     break;
                 case 'signup':
-                    //   initSettings();
                     break;
                 default:
                     break;
