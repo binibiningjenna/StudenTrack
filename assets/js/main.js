@@ -1,3 +1,17 @@
+import { closeModalAndRedirect } from './util.js';
+import { initLocalStorage } from './util.js';
+import { initGradesPage } from './grades.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    initLocalStorage();
+    loadPage('landing')
+});
+
+function logout() {
+    localStorage.removeItem('currentUser');
+    loadPage('landing');
+}
+
 function loadPage(pageName) {
     const container = document.getElementById('main-container');
     const navbar = document.getElementById('navbar');
@@ -23,6 +37,9 @@ function loadPage(pageName) {
                     }, 0);
                     break;
                 case 'grades':
+                    import('./grades.js').then(module => {
+                        module.initGradesPage();
+                    });
                     break;
                 case 'attendance':
                     setTimeout(() => {
@@ -32,8 +49,18 @@ function loadPage(pageName) {
                 case 'settings':
                     break;
                 case 'login':
+                    import('./login.js').then(module => {
+                        if (module.initLoginForm) {
+                            module.initLoginForm();
+                        }
+                    });
                     break;
                 case 'signup':
+                    import('./signup.js').then(module => {
+                        if (module.initSignupForm) {
+                            module.initSignupForm();
+                        }
+                    });
                     break;
                 default:
                     break;
@@ -45,15 +72,7 @@ function loadPage(pageName) {
         });
 }
 
-// function closeNavBar() {
-//     document.querySelectorAll('.nav-link').forEach(link => {
-//         link.addEventListener('click', () => {
-//             const navbar = document.getElementById('navbar');
-//             const bsCollapse = bootstrap.Collapse.getInstance(navbar);
-//             if (bsCollapse) {
-//                 bsCollapse.hide();
-//             }
-//         })
-//     })
-// }
-// closeNavBar();
+window.loadPage = loadPage;
+window.closeModalAndRedirect = closeModalAndRedirect;
+window.logout = logout;
+window.initGradesPage = initGradesPage;
