@@ -1,3 +1,6 @@
+import { getCurrentUser } from "./util.js";
+import { showToast } from "./util.js";
+
 export function initGradesPage() {
   const addSubjectBtn = document.getElementById('addSubject');
   const inputSubjectRow = document.getElementById('inputSubjectRow');
@@ -9,9 +12,6 @@ export function initGradesPage() {
   const semesterFilter = document.getElementById('semester');
   const gradesTableBody = document.getElementById('gradesTableBody');
   const gpaElement = document.getElementById('gpa');
-  const toastElement = document.getElementById('alertToast');
-  const toastBody = document.getElementById('toastBody');
-  const toast = new bootstrap.Toast(toastElement);
 
   let isAdding = false;
 
@@ -174,7 +174,7 @@ export function initGradesPage() {
     const allGrades = JSON.parse(localStorage.getItem('grades')) || {};
     allGrades[currentUser.email] = allGrades[currentUser.email].filter(g => g.id !== id);
     localStorage.setItem('grades', JSON.stringify(allGrades));
-    showToast('Grade Deleted', 'warning');
+    showToast('Grade Deleted', 'error');
     renderGrades();
   };
 
@@ -220,25 +220,5 @@ export function initGradesPage() {
     inputSubjectRow.style.display = 'none';
     addSubjectBtn.innerHTML = '<i class="bi bi-plus"></i> Add Subject';
     isAdding = false;
-  }
-
-  function getCurrentUser() {
-    const user = JSON.parse(localStorage.getItem('currentUser'));
-    return user && user.email ? user : null;
-  }
-
-  const colorMap = {
-    success: 'bg-success text-white',
-    error: 'bg-danger text-white',
-    warning: 'bg-warning text-dark',
-    info: 'bg-info text-dark'
-  };
-
-  function showToast(msg, type = 'info') {
-    toastElement.className = 'toast align-items-center border-0';
-    const colorClass = colorMap[type] || colorMap.info;
-    toastElement.classList.add(...colorClass.split(' '));
-    toastBody.textContent = msg;
-    toast.show();
   }
 }

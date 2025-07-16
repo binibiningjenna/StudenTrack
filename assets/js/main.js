@@ -1,16 +1,5 @@
 import { closeModalAndRedirect } from './util.js';
 import { initLocalStorage } from './util.js';
-import { initGradesPage } from './grades.js';
-
-document.addEventListener('DOMContentLoaded', () => {
-    initLocalStorage();
-    loadPage('landing')
-});
-
-function logout() {
-    localStorage.removeItem('currentUser');
-    loadPage('landing');
-}
 
 function loadPage(pageName) {
     const container = document.getElementById('main-container');
@@ -31,14 +20,11 @@ function loadPage(pageName) {
             container.innerHTML = data;
 
             switch (pageName) {
-                case 'dashboard':
-                    setTimeout(() => {
-                        loadDashboardCalendar();
-                    }, 0);
-                    break;
                 case 'grades':
                     import('./grades.js').then(module => {
-                        module.initGradesPage();
+                        if (module.initGradesPage) {
+                            module.initGradesPage();
+                        }
                     });
                     break;
                 case 'attendance':
@@ -47,6 +33,11 @@ function loadPage(pageName) {
                     }, 0);
                     break;
                 case 'settings':
+                    import('./settings.js').then(module => {
+                        if (module.initSettingsPage) {
+                            module.initSettingsPage();
+                        }
+                    });
                     break;
                 case 'login':
                     import('./login.js').then(module => {
@@ -62,6 +53,13 @@ function loadPage(pageName) {
                         }
                     });
                     break;
+                case 'dashboard':
+                   import('./dashboard.js').then(module => {
+                        if (module.initDashboardPage) {
+                            module.initDashboardPage();
+                        }
+                    });
+                    break;
                 default:
                     break;
             }
@@ -72,7 +70,17 @@ function loadPage(pageName) {
         });
 }
 
+
+function logout() {
+    localStorage.removeItem('currentUser');
+    loadPage('landing');
+}
+
 window.loadPage = loadPage;
 window.closeModalAndRedirect = closeModalAndRedirect;
 window.logout = logout;
-window.initGradesPage = initGradesPage;
+
+document.addEventListener('DOMContentLoaded', () => {
+    initLocalStorage();
+    loadPage('landing')
+});
