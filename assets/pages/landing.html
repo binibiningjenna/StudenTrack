@@ -1,15 +1,17 @@
+<!-- Landing page with logo, intro text, and main buttons -->
 <div class="container-fluid p-0 py-4">
   <div class="px-4 py-5 my-4 text-center">
     <img class="d-block mx-auto" src="assets/img/studentrack_logo.png" alt="logo" width="100" />
     <div class="fs-1 fw-bold mb-4">Studen<span style="color: var(--primaryColor)" class="fw-bold">Track</span></div>
     <div class="col-lg-6 mx-auto">
       <p class="fs-6 text-muted mb-4">
-        StudenTrack is a smart and user-friendly web application designed to help you monitor student grades and attendance with ease. It features RFID-powered check-ins, semester-based filtering, automatic GPA calculation, and a fully responsive
-        interface built with Bootstrap and JavaScript. Students can also organize their academic journey by scheduling class and important events — all in one streamlined dashboard.
+        Easily manage your grades, track your attendance with RFID check-ins, and organize events — all in one place. 
+        With semester and year-level filtering, auto GPA calculation, and a sleek, responsive design, StudenTrack helps 
+        students stay focused, productive, and on top of their goals.
       </p>
       <div class="d-flex gap-2 d-sm-flex justify-content-center">
         <div type="button" class="btn btn-outline-light w-100 p-2" onclick="loadPage('login')" style="max-width: 160px">Login</div>
-        <div type="button" class="btn btn-outline-light w-100 p-2" onclick="loadPage('checkin')" style="max-width: 160px">Check-In</div>
+        <button type="button" class="btn btn-outline-light w-100 p-2" onclick="loadPage('checkin')" style="max-width: 160px">Check-In</button>
       </div>
     </div>
   </div>

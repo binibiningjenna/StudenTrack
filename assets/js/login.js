@@ -1,4 +1,4 @@
-import { hashPassword } from './util.js';
+import { hashPassword, showToast } from './util.js';
 export function initLoginForm() {
     const loginForm = document.getElementById('loginForm');
 
@@ -9,6 +9,7 @@ export function initLoginForm() {
             const email = document.getElementById('floatingEmail').value.trim();
             const password = document.getElementById('floatingPassword').value.trim();
 
+            // Validate login form inputs
             const inputs = ['floatingEmail', 'floatingPassword'];
             inputs.forEach(id => document.getElementById(id).classList.remove('is-invalid'));
 
@@ -29,29 +30,24 @@ export function initLoginForm() {
             const users = JSON.parse(localStorage.getItem('users')) || [];
             const user = users.find(user => user.email === email);
 
-            function showToast(message) {
-                const toastBody = document.getElementById('loginFormBody');
-                toastBody.textContent = message;
-                const loginAlert = document.getElementById('loginFormAlert');
-                const toast = bootstrap.Toast.getOrCreateInstance(loginAlert);
-                toast.show();
-            }
-
+            // Invalid email (not found)
             if (!user) {
                 document.getElementById('floatingEmail').classList.add('is-invalid');
                 document.getElementById('floatingPassword').classList.add('is-invalid');
-                showToast('Invalid email or password.');
+                showToast('Invalid email or password.', 'error');
                 return;
             }
 
             const hashedPassword = await hashPassword(password);
 
+            // Password doesn't match
             if (user.password !== hashedPassword) {
                 document.getElementById('floatingPassword').classList.add('is-invalid');
-                showToast('Incorrect password.');
+                showToast('Incorrect password.', 'error');
                 return;
             }
 
+            // Save current user and redirect to dashboard
             localStorage.setItem('currentUser', JSON.stringify(user));
             loadPage('dashboard');
         });

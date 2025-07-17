@@ -1,3 +1,4 @@
+<!-- Attendance Dashboard Section with Statistics and FullCalendar -->
 <div class="container">
   <div class="row mt-5">
     <div class="col-12">
@@ -6,11 +7,12 @@
     </div>
   </div>
 
-  <div class="row g-2 my-3 d-flex">
+  <!-- Attendance Overview Cards -->
+  <div class="row g-2 my-3 d-flex attendance-overview">
     <div class="col-6 col-md-6 col-lg-3">
       <div class="dashboard-card d-flex justify-content-between align-items-center p-3">
         <div class="text-start">
-          <div class="fw-bold fs-4 mb-1">15</div>
+          <div class="fw-bold fs-4 mb-1" id="presentDay"></div>
           <small class="text-muted">Days Present</small>
         </div>
         <i class="bi bi-calendar-check fs-2"></i>
@@ -20,7 +22,7 @@
     <div class="col-6 col-md-6 col-lg-3">
       <div class="dashboard-card d-flex justify-content-between align-items-center p-3">
         <div class="text-start">
-          <div class="fw-bold fs-4 mb-1">4</div>
+          <div class="fw-bold fs-4 mb-1" id="absentDay"></div>
           <small class="text-muted">Days Absent</small>
         </div>
         <i class="bi bi-calendar-x fs-2"></i>
@@ -30,7 +32,7 @@
     <div class="col-6 col-md-6 col-lg-3">
       <div class="dashboard-card d-flex justify-content-between align-items-center p-3">
         <div class="text-start">
-          <div class="fw-bold fs-4 mb-1">15</div>
+          <div class="fw-bold fs-4 mb-1" id="loggedDay"></div>
           <small class="text-muted">Days Logged</small>
         </div>
         <i class="bi bi-calendar3 fs-2"></i>
@@ -40,7 +42,7 @@
     <div class="col-6 col-md-6 col-lg-3">
       <div class="dashboard-card d-flex justify-content-between align-items-center p-3">
         <div class="text-start">
-          <div class="fw-bold fs-4 mb-1">85</div>
+          <div class="fw-bold fs-4 mb-1" id="attendanceRate"></div>
           <small class="text-muted">Attendance Rate</small>
         </div>
         <i class="bi bi-percent fs-2"></i>
@@ -48,6 +50,7 @@
     </div>
   </div>
 
+  <!-- Calendar View -->
   <div class="row my-5">
     <div class="col">
       <div class="card border-0 shadow-sm">

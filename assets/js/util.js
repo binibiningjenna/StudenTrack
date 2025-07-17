@@ -7,6 +7,7 @@ export function closeModalAndRedirect() {
   }, 300);
 }
 
+// // Hashes the given password using SHA-256
 export async function hashPassword(password) {
   const encoder = new TextEncoder();
   const data = encoder.encode(password);
@@ -51,7 +52,7 @@ export function initLocalStorage() {
   }
 
   if (!localStorage.getItem('attendance')) {
-    localStorage.setItem('attendance', JSON.stringify([]));
+    localStorage.setItem('attendance', JSON.stringify({}));
   }
 
   if (!localStorage.getItem('events')) {
@@ -59,7 +60,7 @@ export function initLocalStorage() {
   }
 
   if (!localStorage.getItem('grades')) {
-    localStorage.setItem('grades', JSON.stringify([]));
+    localStorage.setItem('grades', JSON.stringify({}));
   }
 
   if (!localStorage.getItem('settings')) {

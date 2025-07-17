@@ -1,7 +1,8 @@
+<!-- Displays the student's academic overview—subjects, GPA, and attendance—filtered by year and semester. -->
 <div class="container">
   <div class="row mt-5">
     <div class="col-12 col-sm-10">
-      <div class="fs-4 fw-medium mt-5">Hello, Syntax Fairy!</div>
+      <div class="fs-4 fw-medium mt-5" id="helloUser">Hello, Syntax Fairy!</div>
     </div>
     <div class="col-12"><hr class="my-3" /></div>
   </div>
@@ -16,6 +17,7 @@
     </div>
   </div>
 
+  <!-- Academic overview section  -->
   <div class="row">
     <div class="col-12 col-sm-10">
       <div class="fs-3 fw-semibold text-uppercase mt-4">Academic Overview</div>
@@ -63,6 +65,7 @@
     </div>
   </div>
 
+  <!-- FullCalendar.js integration for scheduling events -->
   <div class="row mb-5">
     <div class="col-12">
       <div class="fs-3 fw-semibold text-uppercase my-4">Calendar</div>
@@ -108,6 +111,7 @@
             <div class="modal-body" style="padding: 1.5rem">
               <form id="calendarEventForm">
                 <div class="row">
+                  <!-- Dropdowns for selecting academic year and semester -->
                   <div class="col-6 mb-3">
                     <label for="academicYearInput" class="form-label">Academic Year</label>
                     <select id="academicYearInput" class="form-select" required>
@@ -118,7 +122,6 @@
                       <option value="4th Year">4th Year</option>
                     </select>
                   </div>
-
                   <div class="col-6 mb-3">
                     <label for="semesterInput" class="form-label">Semester</label>
                     <select id="semesterInput" class="form-select" required>
@@ -128,11 +131,13 @@
                       <option value="Summer">Summer</option>
                     </select>
                   </div>
+
                   <!-- Title -->
                   <div class="mb-3">
                     <label for="eventTitle" class="form-label">Event Title</label>
                     <input type="text" class="form-control" id="eventTitle" required />
                   </div>
+
                   <!-- Start Date -->
                   <div class="mb-3 col-12 col-md-4">
                     <label for="eventStart" class="form-label">Start Date</label>
@@ -153,8 +158,6 @@
                 </div>
               </form>
             </div>
-
-            <!-- Footer -->
             <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">CANCEL</button>
               <button type="button" class="btn btn-outline-success" id="addEventBtn">ADD</button>
@@ -167,16 +170,14 @@
       <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content" style="border-radius: 15px">
-            <!-- Header -->
             <div style="background-color: var(--darkColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative">
               <h4 class="modal-title text-center" id="editEventModalLabel" style="margin: 0; font-size: 20px; letter-spacing: 2px">EDIT EVENT</h4>
               <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none"></button>
             </div>
-
-            <!-- Body -->
             <div class="modal-body" style="padding: 1.5rem">
               <form id="editCalendarEventForm">
                 <div class="row">
+                  <!-- Dropdowns for selecting academic year and semester -->
                   <div class="col-6 mb-3">
                     <label for="editAcademicYear" class="form-label">Academic Year</label>
                     <select id="editAcademicYear" class="form-select" required>
@@ -196,21 +197,25 @@
                       <option value="Summer">Summer</option>
                     </select>
                   </div>
+
                   <!-- Title -->
                   <div class="mb-3">
                     <label for="editEventTitle" class="form-label">Event Title</label>
                     <input type="text" class="form-control" id="editEventTitle" required />
                   </div>
+
                   <!-- Start Date -->
                   <div class="mb-3 col-12 col-md-4">
                     <label for="editEventStart" class="form-label">Start Date</label>
                     <input type="date" class="form-control" id="editEventStart" required />
                   </div>
+
                   <!-- End Date -->
                   <div class="mb-3 col-12 col-md-4">
                     <label for="editEventEnd" class="form-label">End Date</label>
                     <input type="date" class="form-control" id="editEventEnd" required />
                   </div>
+
                   <!-- Color Picker -->
                   <div class="mb-3 col-12 col-md-4">
                     <label for="editEventColor" class="form-label">Color</label>
@@ -219,8 +224,6 @@
                 </div>
               </form>
             </div>
-
-            <!-- Footer -->
             <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem">
               <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteEventModal">DELETE</button>
               <button type="button" class="btn btn-outline-success" id="saveEditEventModal">SAVE CHANGES</button>
@@ -233,21 +236,16 @@
       <div class="modal fade" id="deleteEventModal" tabindex="-1" aria-labelledby="deleteEventModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content" style="border-radius: 15px">
-            <!-- Header -->
             <div style="background-color: var(--darkColor); color: white; padding: 1rem; border-top-left-radius: 15px; border-top-right-radius: 15px; position: relative">
               <h4 class="modal-title text-center" id="deleteEventModalLabel" style="margin: 0; font-size: 20px; letter-spacing: 2px">DELETE EVENT</h4>
               <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; top: 16px; right: 16px; background-color: transparent; opacity: 1; outline: none; box-shadow: none"></button>
             </div>
-
-            <!-- Body -->
             <div class="modal-body text-center" style="padding: 1.5rem">
               <p style="margin: 0; font-size: 16px; color: black">
                 Are you sure you want to delete this event?<br /><br />
                 This action cannot be undone and the event will be permanently removed from the calendar.
               </p>
             </div>
-
-            <!-- Footer -->
             <div class="modal-footer d-flex justify-content-end" style="border: none; padding: 1rem">
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">CANCEL</button>
              <button type="button" class="btn btn-outline-danger" id="confirmDeleteEventModal">DELETE</button>

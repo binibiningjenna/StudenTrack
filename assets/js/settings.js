@@ -1,14 +1,12 @@
 import { getCurrentUser, showToast, hashPassword, closeModalAndRedirect } from './util.js';
 
 export function initSettingsPage() {
-    // Get display elements
     const nameDisplay = document.getElementById('name');
     const emailDisplay = document.getElementById('email');
     const rfidDisplay = document.getElementById('rfid');
     const yearSelect = document.getElementById('academicYear');
     const semesterSelect = document.getElementById('semester');
 
-    // Get current user
     const currentUser = getCurrentUser();
     if (!currentUser) return;
 
@@ -44,7 +42,6 @@ export function initSettingsPage() {
     // Handle edit modal
     const editModal = document.getElementById('editAccountModal');
     editModal.addEventListener('show.bs.modal', () => {
-        // Fill input fields
         document.getElementById('editName').value = userData.name;
         document.getElementById('editEmail').value = userData.email;
         document.getElementById('editNumber').value = userData.rfid;
@@ -65,27 +62,61 @@ export function initSettingsPage() {
         const userIndex = users.findIndex(user => user.email === currentUser.email);
         if (userIndex === -1) return;
 
-        // Update user data
         users[userIndex].name = newName;
         users[userIndex].email = newEmail;
         users[userIndex].rfid = newRFID;
 
-        // Save changes
-        localStorage.setItem('users', JSON.stringify(users));
-        localStorage.setItem('currentUser', JSON.stringify({ email: newEmail }));
+        // Migrate all data tied to old email
+        if (newEmail !== currentUser.email) {
+            // Update settings
+            const settings = JSON.parse(localStorage.getItem('settings')) || {};
+            if (settings[currentUser.email]) {
+                settings[newEmail] = settings[currentUser.email];
+                delete settings[currentUser.email];
+                localStorage.setItem('settings', JSON.stringify(settings));
+            }
 
-        // Hide modal
+            // Update grades
+            const grades = JSON.parse(localStorage.getItem('grades')) || {};
+            if (grades[currentUser.email]) {
+                grades[newEmail] = grades[currentUser.email];
+                delete grades[currentUser.email];
+                localStorage.setItem('grades', JSON.stringify(grades));
+            }
+
+            // Update events
+            const events = JSON.parse(localStorage.getItem('events')) || [];
+            events.forEach(e => {
+                if (e.email === currentUser.email) e.email = newEmail;
+            });
+            localStorage.setItem('events', JSON.stringify(events));
+
+            // Update attendance
+            const attendance = JSON.parse(localStorage.getItem('attendance')) || {};
+            if (attendance[currentUser.email]) {
+                const updatedEntries = attendance[currentUser.email].map(entry => {
+                    return { ...entry, email: newEmail };
+                });
+
+                attendance[newEmail] = updatedEntries;
+                delete attendance[currentUser.email];
+
+                localStorage.setItem('attendance', JSON.stringify(attendance));
+            }
+        }
+
+        // Save updated current user email and name
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', JSON.stringify({ email: newEmail, name: newName }));
         const modal = bootstrap.Modal.getInstance(document.getElementById('editAccountModal'));
         modal.hide();
-
-        // Show success toast
         showToast('Account updated successfully.', 'success');
 
-        // Update display info
         nameDisplay.textContent = newName;
         emailDisplay.textContent = newEmail;
         rfidDisplay.textContent = newRFID;
     };
+
 
     // Handle delete modal
     const deleteModal = document.getElementById('deleteAccountModal');
@@ -121,13 +152,9 @@ export function initSettingsPage() {
 
         // Clear current user
         localStorage.removeItem('currentUser');
-
-        // Hide modal
         const modal = bootstrap.Modal.getInstance(document.getElementById('deleteAccountModal'));
         modal.hide();
         document.activeElement.blur();
-
-        // Redirect after delete
         closeModalAndRedirect();
     };
 
@@ -176,10 +203,8 @@ export function initSettingsPage() {
         users[userIndex].password = newHashed;
         localStorage.setItem('users', JSON.stringify(users));
 
-        // Show success message
         showToast('Password updated successfully.', 'success');
 
-        // Reset and hide modal
         document.getElementById('editPasswordForm').reset();
         const modal = bootstrap.Modal.getInstance(document.getElementById('editPasswordModal'));
         modal.hide();

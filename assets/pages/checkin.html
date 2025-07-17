@@ -1,13 +1,23 @@
+<!-- RFID Check-In form -->
 <div class="container my-5">
   <div class="row">
     <div class="col-12">
       <div class="d-flex flex-column align-items-center text-center mt-5">
         <a><img class="d-block mx-auto mt-5" src="assets/img/studentrack_logo.png" onclick="loadPage('landing')" alt="logo" width="100"></a>        
         <div class="fs-4 fw-semibold mb-3"></i>RFID Check-In</div>
-        <form autocomplete="off" class="w-100" style="max-width: 400px">
+        <form id="rfid-form" autocomplete="off" class="w-100" style="max-width: 400px" onsubmit="return false;">
           <input type="text" id="rfid" name="rfid" class="form-control text-center my-2" placeholder="Scan RFID" autofocus />
         </form>
-        <div id="alertBox" class="alert alert-success mt-3 w-100 text-center" style="max-width: 400px">Attendance logged successfully.</div>
+      </div>
+
+      <!-- Toast Notification -->
+      <div class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1100">
+        <div id="alertToast" class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body" id="toastBody"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

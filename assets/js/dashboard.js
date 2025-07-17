@@ -2,22 +2,20 @@ import { getCurrentUser, showToast } from "./util.js";
 
 export function initDashboardPage() {
 
-  // Get current logged-in user
   const currentUser = getCurrentUser();
   if (!currentUser) return;
+  document.getElementById('helloUser').textContent = `Hello, ${currentUser.name || 'Student'}!`;
 
-  // Retrieve user settings
   const allSettings = JSON.parse(localStorage.getItem('settings')) || {};
   const userFilter = allSettings[currentUser.email] || {};
   const currentYear = userFilter.year;
   const currentSemester = userFilter.semester;
 
-  // Ensure filters are set
   if (!currentYear || !currentSemester) {
-    return showToast('Please go to Settings and select your Academic Year and Semester to view dashboard data.', 'danger');
+    return showToast('To view your Dashboard, Grades, and Attendance, please set your Academic Year and Semester in the Settings.', 'danger');
   }
 
-  // Get and filter grades
+  // Load and filter grades
   const allGradesObj = JSON.parse(localStorage.getItem('grades')) || {};
   const allGrades = allGradesObj[currentUser.email] || [];
 
@@ -26,17 +24,16 @@ export function initDashboardPage() {
     g.semester === currentSemester
   );
 
-  // Compute academic overview
+  // Calculate academic stats
   const totalSubjects = filteredGrades.length;
   const passingGrades = filteredGrades.filter(g => g.grade <= 3.0).length;
   const failingGrades = filteredGrades.filter(g => g.grade > 3.0).length;
   const totalGradeValue = filteredGrades.reduce((sum, g) => sum + g.grade, 0);
   const gpa = totalSubjects > 0 ? (totalGradeValue / totalSubjects).toFixed(2) : 'N/A';
 
-  // Render academic overview UI
   if (totalSubjects === 0) {
     document.querySelector('.academic-overview')?.insertAdjacentHTML('beforeend', `
-      <div class="text-muted text-center my-4">No academic records found for the selected semester.</div>
+      <div class="text-muted text-center my-4">No academic records found for the selected year and semester.</div>
     `);
   } else {
     document.getElementById('totalSubjects').textContent = totalSubjects;
@@ -44,8 +41,8 @@ export function initDashboardPage() {
     document.getElementById('failingGrades').textContent = failingGrades;
     document.getElementById('gpa').textContent = gpa;
   }
-
-  // Filter events for user
+  
+  // Filter events for current user
   const allEvents = JSON.parse(localStorage.getItem('events')) || [];
   const filteredEvents = allEvents.filter(e =>
     e.email === currentUser.email &&
@@ -54,8 +51,8 @@ export function initDashboardPage() {
   );
 
   let selectedEvent = null;
-
-  // Load and render calendar
+  
+  // Initialize calendar with filtered events
   function loadDashboardCalendar() {
     const calendarEl = document.getElementById('dashboard-calendar');
     if (!calendarEl) return;
@@ -68,7 +65,6 @@ export function initDashboardPage() {
       eventResizableFromStart: true,
       events: filteredEvents,
 
-      // Handle date click (add)
       dateClick(info) {
         document.getElementById('calendarEventForm').reset();
         document.getElementById('eventStart').value = info.dateStr;
@@ -76,7 +72,6 @@ export function initDashboardPage() {
         new bootstrap.Modal(document.getElementById('addEventModal')).show();
       },
 
-      // Handle event click (edit)
       eventClick(info) {
         selectedEvent = info.event;
         const eventData = allEvents.find(e => e.id === selectedEvent.id);
@@ -92,7 +87,6 @@ export function initDashboardPage() {
         new bootstrap.Modal(document.getElementById('editEventModal')).show();
       },
 
-      // Handle event drag/drop
       eventDrop(info) {
         const idx = allEvents.findIndex(e => e.id === info.event.id);
         if (idx !== -1) {
@@ -104,8 +98,8 @@ export function initDashboardPage() {
     });
 
     calendar.render();
-
-    // Handle event addition
+    
+    // Add event handler
     document.getElementById('addEventBtn')?.addEventListener('click', () => {
       const title = document.getElementById('eventTitle').value;
       const start = document.getElementById('eventStart').value;
@@ -132,7 +126,6 @@ export function initDashboardPage() {
       allEvents.push(newEvent);
       localStorage.setItem('events', JSON.stringify(allEvents));
 
-      // Only show if semester matches
       if (academicYear === currentYear && semester === currentSemester) {
         calendar.addEvent({
           id: newEvent.id,
@@ -147,7 +140,7 @@ export function initDashboardPage() {
       bootstrap.Modal.getInstance(document.getElementById('addEventModal'))?.hide();
     });
 
-    // Handle event update
+    // Update event handler
     document.getElementById('saveEditEventModal')?.addEventListener('click', () => {
       if (!selectedEvent) return;
 
@@ -174,7 +167,6 @@ export function initDashboardPage() {
 
         selectedEvent.remove(); 
 
-        // Only re-add if semester matches
         if (newYear === currentYear && newSem === currentSemester) {
           calendar.addEvent({
             id: allEvents[idx].id,
@@ -191,7 +183,7 @@ export function initDashboardPage() {
       }
     });
 
-    // Handle event deletion
+    // Delete event handler
     document.getElementById('confirmDeleteEventModal')?.addEventListener('click', () => {
       if (!selectedEvent) return;
 

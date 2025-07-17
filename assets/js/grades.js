@@ -68,6 +68,7 @@ export function initGradesPage() {
     renderGrades();
   }
 
+  // Render the grades list based on selected filters
   function renderGrades() {
     const currentUser = getCurrentUser();
     if (!currentUser) return;
@@ -75,9 +76,9 @@ export function initGradesPage() {
     const allGrades = JSON.parse(localStorage.getItem('grades')) || {};
     let grades = allGrades[currentUser.email] || [];
 
+    // Apply filters
     const selectedYear = academicYearFilter.value;
     const selectedSemester = semesterFilter.value;
-
     if (selectedYear !== 'all') {
       grades = grades.filter(g => g.academicYear === selectedYear);
     }
@@ -85,12 +86,13 @@ export function initGradesPage() {
       grades = grades.filter(g => g.semester === selectedSemester);
     }
 
+    // Update UI
     gradesTableBody.innerHTML = '';
 
     if (grades.length === 0) {
       gradesTableBody.innerHTML = `
         <tr>
-          <td colspan="4" class="text-center text-muted py-4">No grades found</td>
+          <td colspan="4" class="text-center text-muted py-4">No grades found for the selected year and semester</td>
         </tr>
       `;
       gpaElement.textContent = '0.00';
@@ -112,7 +114,7 @@ export function initGradesPage() {
       `;
       gradesTableBody.appendChild(row);
 
-      // Append Edit Modal
+      // Edit Modal
       document.body.insertAdjacentHTML('beforeend', `
         <div class="modal fade" id="editSubjectModal${g.id}" tabindex="-1" aria-labelledby="editSubjectModalLabel${g.id}" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
@@ -142,7 +144,7 @@ export function initGradesPage() {
         </div>
       `);
 
-      // Append Delete Modal
+      // Delete Modal
       document.body.insertAdjacentHTML('beforeend', `
         <div class="modal fade" id="deleteSubjectModal${g.id}" tabindex="-1" aria-labelledby="deleteSubjectModalLabel${g.id}" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">

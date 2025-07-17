@@ -1,4 +1,4 @@
-import { hashPassword } from './util.js';
+import { hashPassword, showToast } from './util.js';
 export function initSignupForm() {
 
   const signupForm = document.getElementById('signupForm');
@@ -13,6 +13,7 @@ export function initSignupForm() {
       const confirmPassword = document.getElementById('confirmPassword').value;
       const rfid = document.getElementById('rfid').value.trim();
 
+      // Validating input fields
       const inputs = ['name', 'email', 'password', 'confirmPassword', 'rfid'];
       inputs.forEach(id => document.getElementById(id).classList.remove('is-invalid'));
 
@@ -38,31 +39,26 @@ export function initSignupForm() {
         hasError = true;
       }
 
-      if (!rfid) {
+      if (!rfid || rfid.length !== 10) {
         document.getElementById('rfid').classList.add('is-invalid');
         hasError = true;
       }
 
       if (hasError) return;
 
+      // Checking for duplicate email
       const users = JSON.parse(localStorage.getItem('users')) || [];
       const emailExists = users.some(user => user.email === email);
 
-      function showToast(message) {
-        const toastBody = document.getElementById('signupFormBody');
-        toastBody.textContent = message;
-        const signupAlert = document.getElementById('signupFormAlert');
-        const toast = bootstrap.Toast.getOrCreateInstance(signupAlert);
-        toast.show();
-      }
-
       if (emailExists) {
-        showToast('Email already exists.')
+        showToast('Email already exists.', 'error')
         return;
       }
 
+      // Hashing the password securely
       const hashedPassword = await hashPassword(password);
       const newUser = { name, email, password: hashedPassword, rfid };
+
       users.push(newUser);
       localStorage.setItem('users', JSON.stringify(users));
       localStorage.setItem('currentUser', JSON.stringify(newUser));
